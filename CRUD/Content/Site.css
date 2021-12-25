@@ -1,0 +1,10 @@
+﻿.font-monospace {
+    color:snow;
+    padding:0;
+    margin:0;
+    margin-right:20px
+}
+
+.d-flexMe {
+    align-items: center;
+}

@@ -1,0 +1,132 @@
+﻿@using DOL.Models
+@model Employee
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .containerTable {
+        width: 90vw;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .btn-secondary {
+        margin-bottom: 15px;
+        width: 246px;
+    }
+</style>
+<div class="containerTable">
+    <div class="AddEmployee ">
+        @Html.ActionLink("Add employee", "AddEditEmployee", "Home", new { id = 0 }, new { @class = "btn btn-secondary" })
+    </div>
+    <table id="Employees" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(m => m.id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.firstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.salary)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.bod)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div class="actions">
+    <a href=""></a>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            data_table();
+            
+        });
+
+        function data_table() {
+            $('#Employees').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "pageLength": 4,
+                "ajax": {
+                    "url": "/Home/LoadAllEmployees",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false,
+                        "responsive": true
+                    },
+                    {
+                        "targets": [1],
+                        "visible": true,
+                        "orderable": true,
+                        "searchable": true,
+                        "responsive": true
+                    },
+                    {
+                        "targets": [2],
+                        "visible": true,
+                        "orderable": true,
+                        "searchable": true,
+                        "responsive": true
+                    },
+                    {
+                        "targets": [3],
+                        "visible": true,
+                        "orderable": true,
+                        "searchable": true,
+                        "responsive": true
+                    },
+                    {
+                        "targets": [4],
+                        "searchable": false,
+                        "orderable": false,
+                        "format": 'MM-DD-YYYY h:mm A',
+                        "responsive": true
+                    },
+                    {
+                        "targets": [5],
+                        "searchable": false,
+                        "orderable": false
+                    }
+                    ],
+                "columns": [
+                    { "data": "id", "Name": "ID", "autoWidth": true },
+                    { "data": "firstName", "Name": "Name", "autoWidth": true },
+                    { "data": "email", "Name": "Email", "autoWidth": true },
+                    { "data": "salary", "Name": "Salary", "autoWidth": true },
+                    { "data": "bod", "Name": "bod", "autoWidth": true },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div class="action_btn">'+
+                                '<a class="btn btn-warning" href ="/Home/AddEditEmployee?id=' + row.id + '" style = "cursor: pointer" > Edit </a > ' +
+                                '<a class="btn btn-danger" href ="/Home/DeleteEmployee?id=' + row.id + '"  style="cursor:pointer" >Delete </a>' +
+                                '</div>';
+
+                        }
+                    }
+                ]
+            });
+
+        }
+    </script>
+}

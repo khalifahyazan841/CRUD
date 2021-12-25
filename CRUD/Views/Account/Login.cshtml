@@ -1,0 +1,119 @@
+﻿@using DOL.Models;
+@model Login
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <title>Login</title>
+    <style>
+        body > * {
+            overflow: hidden;
+        }
+
+        .row {
+            height: 100vh !important;
+        }
+
+        .box {
+            -webkit-box-shadow: 10px 6px 23px -7px rgb(0 0 0 / 78%);
+            box-shadow: 10px 6px 23px -7px rgb(0 0 0 / 78%);
+            padding: 30px;
+            box-sizing: content-box;
+            border-radius: 20px;
+            height: 327px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .Title {
+            font-size: 33px;
+            color: #838383;
+        }
+
+        .btnSubmet {
+            width: 200px;
+        }
+
+        .form-control {
+            display: initial;
+        }
+
+        .btn {
+            width: 160px;
+        }
+
+        .row > * {
+            width: inherit !important;
+        }
+
+        .alert {
+            position: absolute;
+            top: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+            .alert > div {
+                text-align: center;
+            }
+
+        .display {
+            display: none !important;
+            animation:all 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    @if (ViewBag.incorrect == true)
+    {
+        <div class="alert alert-danger d-flex align-items-center  " role="alert">
+            <div>
+                Username Or Password is Incorrect
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger d-flex align-items-center display " role="alert">
+            <div>
+                Username Or Password is Incorrect
+            </div>
+        </div>
+    }
+
+
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        <div class="row d-flex justify-content-center align-items-center ">
+            <div class=" col-md-3 box">
+                <p class="Title">Login</p>
+                <div class="UserName">
+                    <div class="Boxes">
+                        @Html.LabelFor(m => m.Username, new { @class = "labusername" })
+                        @Html.TextBoxFor(m => m.Username, new { @class = "txtusername form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Username, null, new { @class = "text-danger" })
+                </div>
+                <div class="Password">
+                    <div class="Boxes">
+                        @Html.LabelFor(m => m.Password, new { @class = "labPassword" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "txtPassword form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
+                </div>
+                <div class="btnSubmet">
+                    <button type="submit" class="btn btn-dark" value="Login">Login</button>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
